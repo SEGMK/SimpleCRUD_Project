@@ -7,7 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class People extends Model
 {
-    protected $table = 'users';
-    protected $primaryKey = 'id';
-    protected $fillable = ['name', 'lastName', 'phone', 'street', 'city/conutry'];
+    use HasFactory;
 }
