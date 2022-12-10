@@ -14,9 +14,11 @@ class PeopleController extends Controller
      */
     public function index()
     {
-        //
+        $persons = People::latest()->paginate(5);
+    
+        return view('people.index',compact('people'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -24,7 +26,7 @@ class PeopleController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.create');
     }
 
     /**
@@ -35,7 +37,17 @@ class PeopleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'lastName' => 'required',
+            'phone' => 'required',
+            'street' => 'required',
+            'city/conutry' => 'required'
+        ]);
+
+        People::create($request->all());
+
+        return redirect()->route('people.index')->with('success', 'Person created successfully');
     }
 
     /**
@@ -46,7 +58,7 @@ class PeopleController extends Controller
      */
     public function show(People $people)
     {
-        //
+        return view('people.show',compact('people'));
     }
 
     /**
@@ -57,7 +69,7 @@ class PeopleController extends Controller
      */
     public function edit(People $people)
     {
-        //
+        return view('people.edit',compact('people'));
     }
 
     /**
@@ -69,7 +81,17 @@ class PeopleController extends Controller
      */
     public function update(Request $request, People $people)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'lastName' => 'required',
+            'phone' => 'required',
+            'street' => 'required',
+            'city/conutry' => 'required'
+        ]);
+    
+        People::update($request->all());
+
+        return redirect()->route('people.index')->with('success', 'Person updated successfully');
     }
 
     /**
@@ -80,6 +102,8 @@ class PeopleController extends Controller
      */
     public function destroy(People $people)
     {
-        //
+        $person->delete();
+    
+        return redirect()->route('person.index')->with('success','Person deleted successfully');
     }
 }
