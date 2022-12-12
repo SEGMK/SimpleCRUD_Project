@@ -6,7 +6,7 @@
 <body>
   
 <div class="container">
-    @yield('content')
+    <h2>penis</h2>
 </div>
    
 </body>

@@ -18,4 +18,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('people', PeopleController::class);
+Route::resource('wilder/308776/people', PeopleController::class);
