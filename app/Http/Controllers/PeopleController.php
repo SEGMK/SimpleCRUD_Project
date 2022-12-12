@@ -14,7 +14,8 @@ class PeopleController extends Controller
      */
     public function index()
     {
-        return view('layout');
+        $data = People::all();
+        return view('layout', ['users' => $data]);
     }
     /**
      * Show the form for creating a new resource.
