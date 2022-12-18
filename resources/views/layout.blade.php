@@ -12,6 +12,12 @@
        align-items: center;
     }
     </style>
+    <div class="center">
+    <button onclick="location.href='people/create'">Create</button>
+    <button onclick="location.href='people/read'">Read</button>
+    <button onclick="location.href='people/update'">Update</button>
+    <button onclick="location.href='people/delete'">Delete</button>
+    </div>
 <div class="center">
     <table border="1">
         <tr>

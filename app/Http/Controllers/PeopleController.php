@@ -4,103 +4,41 @@ namespace App\Http\Controllers;
 
 use App\Models\People;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\storePeopleRequest;
 
 class PeopleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(): JsonResponse
     {
-        $data = People::all();
-        return view('layout', ['users' => $data]);
-    }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //return view('create');
+        return response()->json(People::all(), 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function show(People $people): JsonResponse
     {
-        $request->validate([
-            'name' => 'required',
-            'lastName' => 'required',
-            'phone' => 'required',
-            'street' => 'required',
-            'city/conutry' => 'required'
-        ]);
-
-        People::create($request->all());
+        return response()->json($people, 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\People  $people
-     * @return \Illuminate\Http\Response
-     */
-    public function show(People $people)
+
+    public function create(storePeopleRequest $request): JsonResponse
     {
-        //return redirect()->route('people.index')->with('success', 'Person updated successfully');
-        return view('layout');
+        $people = People::create($request->all());
+
+        return response()->json($people, 201);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\People  $people
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(People $people)
+    public function update(storePeopleRequest $request, People $people): JsonResponse
     {
-        //return view('edit');
+        $people->update($request->all());
+
+        return response()->json($people, 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\People  $people
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, People $people)
+    public function delete(People $people): JsonResponse
     {
-        $request->validate([
-            'name' => 'required',
-            'lastName' => 'required',
-            'phone' => 'required',
-            'street' => 'required',
-            'city/conutry' => 'required'
-        ]);
-    
-        People::update($request->all());
+        $people->delete();
 
-        //return redirect()->route('index')->with('success', 'Person updated successfully');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\People  $people
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(People $people)
-    {
-        $person->delete();
-    
-        //return redirect()->route('index')->with('success','Person deleted successfully');
+        return response()->json(null, 204);
     }
 }

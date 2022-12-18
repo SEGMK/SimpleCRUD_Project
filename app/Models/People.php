@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class People extends Model
 {
+    public $timestamps= false;
     use HasFactory;
     protected $fillable = [
         'name',
         'lastName',
         'phone',
         'street',
-        'city/conutry',
+        'city/conutry'
     ];
 }
